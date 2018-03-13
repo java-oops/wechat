@@ -13,5 +13,5 @@ public class ChatRoom {
     private String name; 
     private String avatarPath; //头像图片路径
     private Date time; //最后聊天时间
-    private message[] msgs;
+    private Message[] msgs;
 }
