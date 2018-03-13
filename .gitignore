@@ -25,3 +25,5 @@ hs_err_pid*
 
 target/
 *.iml
+src/main/java/scau/oop/wechat/trying/
+src/main/java/scau/oop/wechat/trying/WechatService.java
