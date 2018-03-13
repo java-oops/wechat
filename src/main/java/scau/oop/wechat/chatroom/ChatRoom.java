@@ -1,5 +1,5 @@
 package scau.oop.wechat.chatroom;
-
+import scau.oop.wechat.msg.Message;
 import java.util.Date;
 
 /**
