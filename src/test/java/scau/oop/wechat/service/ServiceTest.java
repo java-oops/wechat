@@ -70,7 +70,7 @@ public void testLogin() throws Exception {
     Http.downloadFile("http://login.weixin.qq.com/qrcode/"+uuid,"1.png"); //使用上面得到的uuid请求二维码图像
 
     //java使用Runtime.getRuntime().exec()可以在windows中调用系统命令：
-    Runtime.getRuntime().exec("cmd /c E:\\美图秀秀\\XiuXiu\\XiuXiu.exe 1.png");
+    //Runtime.getRuntime().exec("cmd /c E:\\美图秀秀\\XiuXiu\\XiuXiu.exe 1.png");
 
     String  stateCode = null;
         res = Http.waitPost("http://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login", new HashMap<String, Object>() {{ //检查二维码扫描状态
