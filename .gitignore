@@ -34,3 +34,4 @@ src/main/java/scau/oop/wechat/trying/WechatService.java
 .classpath
 .project
 1.png
+src/test/java/scau/oop/wechat/service/ServiceTest.java
