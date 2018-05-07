@@ -27,7 +27,11 @@ public class Service {
     static String pass_ticket = null;
     static String User = null;
     static String SyncKey = null;
-
+    static String BaseRequest = null;
+    String FromUserName = null;
+    /**
+     * 登录
+     */
     public void Login(){
         final long l = System.currentTimeMillis();//返回当前的计算机时间
 
@@ -44,9 +48,7 @@ public class Service {
             uuid= m.group(1);
         }
 
-
         Http.downloadFile("https://login.weixin.qq.com/qrcode/"+uuid,"1.png"); //使用上面得到的uuid请求二维码图像
-
 
         String  stateCode = null;
         res = Http.waitPost("https://login.weixin.qq.com/cgi-bin/mmwebwx-bin/login", new HashMap<String, Object>() {{ //检查二维码扫描状态
@@ -116,28 +118,47 @@ public class Service {
             }
         }
 
-        //微信初始化
-        String BaseRequest = "\"BaseRequest\":{\"Uin\":\""+wxuin+"\",\"Sid\":\""+wxsid+"\",\"Skey\":\""+skey+"\",\"DeviceID\":\"e825563802462384\"}";
-         try {
-             res = Http.sendPost("https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit?r=" + l + "&lang=zh_CN&pass_ticket=" + pass_ticket, "{" + BaseRequest + "}");
-         } catch (Exception e) {
-             System.out.println("发送 POST 请求出现异常！"+e);
-             e.printStackTrace();
-         }
-        m = Pattern.compile("\"SyncKey\":(.+)\"User\":").matcher(res);
+    }
+
+    /**
+     * 微信初始化
+     *
+     */
+    public void wxInit(){
+        final long l = System.currentTimeMillis();
+        String res = null;
+        BaseRequest = "\"BaseRequest\":{\"Uin\":\""+wxuin+"\",\"Sid\":\""+wxsid+"\",\"Skey\":\""+skey+"\",\"DeviceID\":\"e825563802462384\"}";
+        try {
+            res = Http.sendPost("https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit?r=" + l + "&lang=zh_CN&pass_ticket=" + pass_ticket, "{" + BaseRequest + "}");
+        } catch (Exception e) {
+            System.out.println("微信初始化出现异常！"+e);
+            e.printStackTrace();
+        }
+        Matcher m = Pattern.compile("\"SyncKey\":(.+)\"User\":").matcher(res);
         while (m.find()) {
             SyncKey = m.group(1);
         }
-
+        m = Pattern.compile("\"Val\":\\s*(\\d+)").matcher(SyncKey);
+        String key[] = new String[4];
+        int flag = 0;
+        while (m.find()) {
+            key[flag] = m.group(1);
+            flag++;
+        }
+        SyncKey = "1_"+key[0]+"|2_"+key[1]+"|3_"+key[2]+"|1000_"+key[3];
         m = Pattern.compile("\"User\":(.+)\"ChatSet\":").matcher(res);
         while (m.find()) {
             User = m.group(1);
         }
+    }
 
-
-        //开启微信状态通知
-        String FromUserName = null;
-        m = Pattern.compile("\"UserName\": \"(.+)\",\"NickName\"").matcher(User);
+    /**
+     * 开启微信状态通知
+     *
+     */
+    public void  wxStatusNotify(){
+        final long l = System.currentTimeMillis();
+        Matcher m = Pattern.compile("\"UserName\": \"(.+)\",\"NickName\"").matcher(User);
         while (m.find()) {
             FromUserName = m.group(1);
         }
@@ -146,40 +167,81 @@ public class Service {
         try {
             Http.sendPost("https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxstatusnotify?lang=zh_CN&pass_ticket=" + pass_ticket, wxStatusNotify);
         } catch (Exception e) {
-            System.out.println("发送 POST 请求出现异常！"+e);
+            System.out.println("开启微信状态通知出现异常！"+e);
             e.printStackTrace();
         }
     }
 
+    /**
+     * 获取联系人列表
+     *
+     */
+    public void getContact(){
+        try {
+            final long l = System.currentTimeMillis();//返回当前的计算机时间
+            Http.sendPost("https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxgetcontact?pass_ticket=" + pass_ticket + "&r=" + l + "&seq=0&skey=" + skey, "{" + BaseRequest + "}");
+        } catch (Exception e) {
+            System.out.println("获取联系人列表出现异常！"+e);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 心跳检查
+     * 不成功
+     */
+    public void syncCheck(){
+        Thread thread = new Thread(){
+            public void run(){
+                try {
+                    final String check = Http.sendPost("https://webpush.wx.qq.com/cgi-bin/mmwebwx-bin/synccheck?r=" + System.currentTimeMillis() + "&skey=" + skey + "&sid=" + wxsid + "&uin=" + wxuin + "&deviceid=e825563802462385&synckey=" + SyncKey + "&_=" + System.currentTimeMillis(), "{"+BaseRequest+"}");
+                    System.out.println("心跳检查结果：" + check);
+                } catch (Exception e) {
+                    System.out.println("心跳检查出现异常！"+e);
+                    e.printStackTrace();
+                }
+            }
+        };
+        thread.start();
+    }
+
+    /**
+     * 获取最新消息
+     * 不成功
+     */
+    public void webwxsync(){
+        int r = (int) System.currentTimeMillis();
+        int rr = ~(r / 1000);
+        String res = null;
+        try {
+            res = Http.sendPost("https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxsync?sid=" + wxsid + "&skey=" + skey + "&pass_ticket=" + pass_ticket, "{" + BaseRequest + ",\"SyncKey\":\"" + SyncKey + "\",\"rr\":\"" + rr + "\"}");
+        } catch (Exception e) {
+            System.out.println("获取最新消息出现异常！"+e);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 发送消息
+     */
+    public void webwxsendmsg(int Type,String Content,String ToUserName){
+        int r = (int) System.currentTimeMillis();
+        int ClientMsgId = (r << 4)+7788;
+        String msg = "\"Msg\":{\"Type\":\""+Type+"\",\"Content\":\""+Content+"\",\"FromUserName\":\""+FromUserName+"\",\"ToUserName\":\""+ToUserName+"\",\"LocalID\":\""+ClientMsgId+"\",\"ClientMsgId\":\""+ClientMsgId+"\"}";
+        String res = null;
+        try {
+            res = Http.sendPost("https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxsendmsg?pass_ticket="+pass_ticket,"{"+BaseRequest+","+msg+"}");
+        } catch (Exception e) {
+            System.out.println("发送消息出现异常！"+e);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 登出
+     */
     public void Logout(){
 
-    }
-    public void getUserInfo(){
-
-    }
-
-    public Message[] getMessages(){
-
-        return null;
-    }
-
-    public void listen(Callable<Message> callback){
-
-    }
-    public boolean postMessage(Message msg){
-        return false;
-    }
-    public String getImage(Message msg){
-        return null;
-    }
-    public String getVideo(Message msg){
-        return null;
-    }
-    public ChatRoom[] getAllChatRoom(){
-        return null;
-    }
-    public Person[] getAllPerson(){
-        return null;
     }
 
 
