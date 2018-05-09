@@ -1,5 +1,7 @@
 package scau.oop.wechat.backend.chatroom;
 
+import scau.oop.wechat.backend.User;
+
 import java.util.Date;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Date;
  * @date:2018/3/12 14:53
  */
 
-public class Person {
+public class Person extends User {
     private String avatarPath;
     private String nickname;
     private String UUID;

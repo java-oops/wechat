@@ -1,4 +1,5 @@
 package scau.oop.wechat.backend.chatroom;
+import scau.oop.wechat.backend.Concat;
 import scau.oop.wechat.backend.msg.Message;
 import java.util.Date;
 
@@ -8,7 +9,11 @@ import java.util.Date;
  * @date:2018/3/12 14:52
  */
 
-public class ChatRoom {
+public class ChatRoom extends Concat {
+    public Person[] getPersons() {
+        return persons;
+    }
+
     private Person[] persons; //成员列表
     private String name; 
     private String avatarPath; //头像图片路径

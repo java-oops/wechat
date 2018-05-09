@@ -1,5 +1,7 @@
 package scau.oop.wechat.backend.msg;
 
+import scau.oop.wechat.backend.Concat;
+import scau.oop.wechat.backend.User;
 import scau.oop.wechat.backend.chatroom.ChatRoom;
 import scau.oop.wechat.backend.chatroom.Person;
 
@@ -12,14 +14,14 @@ import java.util.Date;
 
 public class Message {
     private Date time;
-    private Person talker;
+    private User talker;
 
-    public Message(Date time, Person talker, ChatRoom chatRoom) {
+    public Message(Date time, User talker, Concat chatRoom) {
         this.time = time;
         this.talker = talker;
-        this.chatRoom = chatRoom;
+        this.concat = chatRoom;
     }
 
-    private ChatRoom chatRoom;
+    private Concat concat;
 
 }

@@ -62,5 +62,11 @@ public interface Backend {
      */
     void sendMessage(Message message,Callback callback);
 
+    /**
+     * 发送消息，发送完会调用callback函数
+     * 要发送的对象，内容都封装在Message对象里面，注意是多线程的
+     * @param message 待发送的信息对象
+     */
+    void sendMessage(Message message);
 
 }
