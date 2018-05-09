@@ -1,7 +1,7 @@
-package scau.oop.wechat.msg;
+package scau.oop.wechat.backend.msg;
 
-import scau.oop.wechat.chatroom.ChatRoom;
-import scau.oop.wechat.chatroom.Person;
+import scau.oop.wechat.backend.chatroom.ChatRoom;
+import scau.oop.wechat.backend.chatroom.Person;
 
 import java.util.Date;
 

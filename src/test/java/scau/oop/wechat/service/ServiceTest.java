@@ -3,19 +3,7 @@ package scau.oop.wechat.service;
 import org.junit.Test; 
 import org.junit.Before; 
 import org.junit.After;
-import scau.oop.wechat.msg.Message;
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
-import scau.oop.wechat.service.Service;
-import java.lang.Thread;
+
 import static java.lang.Thread.sleep;
 
 /** 

@@ -1,8 +1,8 @@
 package scau.oop.wechat.client;
 
-import scau.oop.wechat.chatroom.ChatRoom;
-import scau.oop.wechat.chatroom.Person;
-import scau.oop.wechat.msg.Message;
+import scau.oop.wechat.backend.chatroom.ChatRoom;
+import scau.oop.wechat.backend.chatroom.Person;
+import scau.oop.wechat.backend.msg.Message;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

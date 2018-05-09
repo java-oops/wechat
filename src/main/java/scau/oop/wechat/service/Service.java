@@ -1,12 +1,5 @@
 package scau.oop.wechat.service;
 
-import scau.oop.wechat.chatroom.ChatRoom;
-import scau.oop.wechat.chatroom.Person;
-import scau.oop.wechat.msg.Message;
-import java.io.*;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.util.concurrent.Callable;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -124,7 +117,7 @@ public class Service {
      * 微信初始化
      *
      */
-    public void wxInit(){
+    public void Init(){
         final long l = System.currentTimeMillis();
         String res = null;
         BaseRequest = "\"BaseRequest\":{\"Uin\":\""+wxuin+"\",\"Sid\":\""+wxsid+"\",\"Skey\":\""+skey+"\",\"DeviceID\":\"e825563802462384\"}";
@@ -156,7 +149,7 @@ public class Service {
      * 开启微信状态通知
      *
      */
-    public void  wxStatusNotify(){
+    public void  StatusNotify(){
         final long l = System.currentTimeMillis();
         Matcher m = Pattern.compile("\"UserName\": \"(.+)\",\"NickName\"").matcher(User);
         while (m.find()) {

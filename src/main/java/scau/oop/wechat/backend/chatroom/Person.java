@@ -1,4 +1,4 @@
-package scau.oop.wechat.chatroom;
+package scau.oop.wechat.backend.chatroom;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package scau.oop.wechat.msg;
+package scau.oop.wechat.backend.msg;
 
 /**
  * @author:czfshine
