@@ -3,13 +3,11 @@ package scau.oop.wechat.backend;
 import scau.oop.wechat.backend.msg.Message;
 
 /**
+ * 后端接口，所有方法均为非阻塞的
  * @author:czfshine
  * @date:2018/5/8 16:54
  */
-
 public interface Backend {
-
-    /*登录（后）相关的*/
 
 
     /**
@@ -63,8 +61,7 @@ public interface Backend {
     void sendMessage(Message message,Callback callback);
 
     /**
-     * 发送消息，发送完会调用callback函数
-     * 要发送的对象，内容都封装在Message对象里面，注意是多线程的
+     * 发送消息，注意是多线程的
      * @param message 待发送的信息对象
      */
     void sendMessage(Message message);

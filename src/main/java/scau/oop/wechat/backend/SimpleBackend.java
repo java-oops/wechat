@@ -11,6 +11,9 @@ import java.util.Date;
  */
 
 public class SimpleBackend implements Backend {
+
+    /*没有具体逻辑，都成功*/
+
     public boolean login() {
         return true;
     }
@@ -19,19 +22,27 @@ public class SimpleBackend implements Backend {
         return true;
     }
 
+    /**
+     * 虚拟用户
+     */
     public class SimpleUser extends User{
 
     }
+
     public User getUserInfo() {
         return new SimpleUser();
     }
 
-
+    /**
+     * 虚拟聊天室
+     */
     public class SimpleChatRoom extends ChatRoom{
 
     }
     private ChatRoom[] allconcat;
     public Concat[] getAllConcats() {
+
+        /*保留给其他方法调用*/
         ChatRoom[] res=new ChatRoom[5];
         res[0]=new SimpleChatRoom();
         res[1]=new SimpleChatRoom();
@@ -42,6 +53,9 @@ public class SimpleBackend implements Backend {
         return res;
     }
 
+    /**
+     * 虚拟消息类型
+     */
     public class SimpleMessage extends Message{
         public SimpleMessage(Date time, User talker, Concat chatRoom) {
             super(time, talker, chatRoom);
@@ -53,11 +67,18 @@ public class SimpleBackend implements Backend {
 
     private Listener listener;
 
+    /**
+     * 模拟收到消息，定时收到
+     * @param listener 待注册的监听器
+     */
     public void registerListener(Listener listener) {
         this.listener=listener;
         startSendMessageBySelf();
     }
 
+    /** 创建随机消息
+     * @return 随机消息
+     */
     private Message createRandomMessage(){
         //todo
         int r=0;
@@ -65,6 +86,10 @@ public class SimpleBackend implements Backend {
         return msg;
     }
     private Thread thread;
+
+    /**
+     * 定时器，定时发送消息给本身
+     */
     private class SendToSelfByTimer extends Thread{
 
         private final int TIME =3000;
@@ -80,6 +105,7 @@ public class SimpleBackend implements Backend {
             }
         }
     }
+
     private void startSendMessageBySelf(){
         if(this.thread==null){
             thread=new SendToSelfByTimer();
@@ -95,6 +121,9 @@ public class SimpleBackend implements Backend {
         sendmeg(message,null);
     }
 
+    /**
+     * 后台发送消息进程
+     */
     private class SendThread extends Thread{
         private Callback callback;
         private Message message;
