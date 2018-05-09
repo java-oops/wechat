@@ -15,10 +15,12 @@ public class SimpleBackend implements Backend {
     /*没有具体逻辑，都成功*/
 
     public boolean login() {
+        //todo
         return true;
     }
 
     public boolean logout() {
+        //todo
         return true;
     }
 

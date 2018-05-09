@@ -6,4 +6,5 @@ package scau.oop.wechat.backend;
  */
 
 public abstract class User {
+
 }
