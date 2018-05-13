@@ -25,13 +25,13 @@ public void after() throws Exception {
 * 
 * Method: login() 
 * 
-*/ 
+*/
 @Test
-public void testLogin() throws Exception { 
+public void testLogin() throws Exception {
 //TODO: Test goes here... 
-} 
+}
 
-/** 
+    /**
 * 
 * Method: logout() 
 * 
