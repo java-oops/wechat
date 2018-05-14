@@ -1,9 +1,11 @@
-package scau.oop.wechat.backend.msg; 
+package scau.oop.wechat.backend;
 
 import org.junit.Test; 
 import org.junit.Before; 
 import org.junit.After;
 import scau.oop.wechat.backend.RocketBackend;
+
+import java.io.IOException;
 
 /** 
 * RocketBackend Tester. 
@@ -153,8 +155,10 @@ public void testSendMessageMessage() throws Exception {
 //TODO: Test goes here... 
 } 
 
-public static void main(String[] args){
-    new RocketBackend().login();
+public static void main(String[] args) throws IOException {
+    RocketBackend rocketBackend=new RocketBackend();
+    rocketBackend.login();
+    rocketBackend.getAllConcats();
 }
 
 } 
