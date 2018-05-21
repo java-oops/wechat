@@ -12,8 +12,12 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import scau.oop.wechat.backend.Backend;
+import scau.oop.wechat.backend.BackendFactory;
+import scau.oop.wechat.backend.RocketBackend;
 
 /**
  * @author:czfshine
@@ -28,7 +32,25 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         initStyle(stage);
+        initBackend();
+        RocketBackend rc=(RocketBackend) BackendFactory.getBackend(ROCKETID);
+        
         stage.show();
+    }
+
+    private void setAllInfo(){
+
+    }
+    private final String ROCKETID="rockedid1";
+    private void initBackend(){
+        BackendFactory.createBackend(ROCKETID,RocketBackend.class);
+        RocketBackend rc=(RocketBackend) BackendFactory.getBackend(ROCKETID);
+        rc.login(()->{
+            rc.Refresh(()->{
+                setAllInfo();
+            });
+        });
+
     }
 
     /**
@@ -43,7 +65,7 @@ public class Main extends Application {
         flowContext = new ViewFlowContext();
         flowContext.register("Stage", stage);
 
-        flow.createHandler(flowContext).start(container);
+        flow.createHandler(flowContext).start(container)
 
 
         JFXDecorator decorator = new JFXDecorator(stage, container.getView());
@@ -51,7 +73,7 @@ public class Main extends Application {
         decorator.setGraphic(new SVGGlyph(""));
 
         decorator.setAlignment(Pos.TOP_LEFT);
-        stage.setTitle("Chater Desktop App");
+        stage.setTitle("走心聊天");
 
         double width = 800;
         double height = 600;
