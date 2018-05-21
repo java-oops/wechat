@@ -1,6 +1,7 @@
 package scau.oop.wechat.backend;
 
 import scau.oop.wechat.backend.chatroom.Concat;
+import scau.oop.wechat.backend.chatroom.User;
 import scau.oop.wechat.backend.msg.Message;
 
 /**

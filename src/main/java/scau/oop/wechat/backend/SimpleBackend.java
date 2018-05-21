@@ -2,6 +2,7 @@ package scau.oop.wechat.backend;
 
 import scau.oop.wechat.backend.chatroom.ChatRoom;
 import scau.oop.wechat.backend.chatroom.Concat;
+import scau.oop.wechat.backend.chatroom.User;
 import scau.oop.wechat.backend.msg.Message;
 
 import java.util.Date;
@@ -33,7 +34,7 @@ public class SimpleBackend implements Backend {
     /**
      * 虚拟用户
      */
-    public class SimpleUser implements User{
+    public class SimpleUser implements User {
 
     }
 

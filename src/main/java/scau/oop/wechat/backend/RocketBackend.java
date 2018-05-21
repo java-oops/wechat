@@ -11,14 +11,12 @@ import com.rocketchat.core.model.RocketChatMessage;
 import com.rocketchat.core.model.SubscriptionObject;
 import com.rocketchat.core.model.TokenObject;
 import com.sun.istack.internal.NotNull;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import scau.oop.wechat.backend.chatroom.Concat;
-import scau.oop.wechat.backend.chatroom.Group;
-import scau.oop.wechat.backend.chatroom.Person;
+import scau.oop.wechat.backend.chatroom.*;
 import scau.oop.wechat.backend.msg.Message;
 import scau.oop.wechat.config.Config;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +44,7 @@ public class RocketBackend implements Backend {
     private static String password=System.getenv("ROCKETCHATPWD");
 
     private boolean logged=false;
-
+    private Me me;
     private Runnable loggincallback;
     private class LoginListener implements com.rocketchat.core.callback.LoginListener{
         @Override
@@ -54,6 +52,8 @@ public class RocketBackend implements Backend {
             if (error==null) {
                 logged=true;
                 logger.info("Logged in successfully, returned token "+ token.getAuthToken());
+                me = new Me();
+                me.setUsername(client.getMyUserName());
                 if(loggincallback!=null){
                     loggincallback.run();
                 }
@@ -110,19 +110,13 @@ public class RocketBackend implements Backend {
 
     @Override
     public User getUserInfo() {
-        return null;
+        return me;
     }
 
     private Map<String,Concat> allconcat=new HashMap<>();
     private Map<Concat,Room> concatRoomMap=new HashMap<>();
     private class GetSubscriptionListenerImpl implements GetSubscriptionListener {
 
-        private class TypeRoom extends Room{
-
-            public TypeRoom(JSONObject object) {
-                super(object);
-            }
-        }
         @Override
         public void onGetSubscriptions(List<SubscriptionObject> subscriptions, ErrorObject error) {
             if (error==null){

@@ -1,7 +1,7 @@
 package scau.oop.wechat.backend.msg;
 
 import scau.oop.wechat.backend.chatroom.Concat;
-import scau.oop.wechat.backend.User;
+import scau.oop.wechat.backend.chatroom.User;
 
 import java.util.Date;
 

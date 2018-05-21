@@ -1,6 +1,10 @@
-package scau.oop.wechat.backend;
+package scau.oop.wechat.backend.chatroom;
 
+import scau.oop.wechat.backend.Backend;
+import scau.oop.wechat.backend.Callback;
+import scau.oop.wechat.backend.MessageListener;
 import scau.oop.wechat.backend.chatroom.Concat;
+import scau.oop.wechat.backend.chatroom.User;
 import scau.oop.wechat.backend.msg.Message;
 
 import java.util.HashMap;

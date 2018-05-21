@@ -1,4 +1,4 @@
-package scau.oop.wechat.backend;
+package scau.oop.wechat.backend.chatroom;
 
 /**
  * @author:czfshine
@@ -6,5 +6,6 @@ package scau.oop.wechat.backend;
  */
 
 public interface User {
+
 
 }
