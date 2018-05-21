@@ -1,9 +1,7 @@
 package scau.oop.wechat.backend.msg;
 
-import scau.oop.wechat.backend.Concat;
+import scau.oop.wechat.backend.chatroom.Concat;
 import scau.oop.wechat.backend.User;
-import scau.oop.wechat.backend.chatroom.ChatRoom;
-import scau.oop.wechat.backend.chatroom.Person;
 
 import java.util.Date;
 
@@ -24,4 +22,21 @@ public class Message {
 
     private Concat concat;
 
+    private String contant;
+
+    public Concat getConcat() {
+        return concat;
+    }
+
+    public void setConcat(Concat concat) {
+        this.concat = concat;
+    }
+
+    public String getContant() {
+        return contant;
+    }
+
+    public void setContant(String contant) {
+        this.contant = contant;
+    }
 }

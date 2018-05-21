@@ -1,9 +1,10 @@
 package scau.oop.wechat.backend;
 
+import scau.oop.wechat.backend.chatroom.Concat;
 import scau.oop.wechat.backend.msg.Message;
 
 /**
- * 后端接口，所有方法均为非阻塞的
+ * 后端接口
  * @author:czfshine
  * @date:2018/5/8 16:54
  */
@@ -20,6 +21,15 @@ public interface Backend {
      * @return 是否登录成功，其他错误信息根据实际需要自行设计
      */
     boolean login();
+
+    /**
+     * 尝试登录
+     *
+     * 在登陆成功后调用回调函数
+     *
+     * @return 是否登录成功，其他错误信息根据实际需要自行设计
+     */
+    boolean login(Runnable callback);
 
     /**
      * 尝试登出
@@ -58,9 +68,9 @@ public interface Backend {
     /**
      * 增加消息监听器
      * 有新消息到来会开个新线程调用该监听器进行处理，注意处理并发情况。
-     * @param listener 待注册的监听器
+     * @param messageListener 待注册的监听器
      */
-    void registerListener(Listener listener);
+    void registerListener(MessageListener messageListener);
 
 
     /**

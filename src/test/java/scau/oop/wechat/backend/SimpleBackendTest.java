@@ -73,7 +73,7 @@ public void testGetRecentMessage() throws Exception {
 
 /** 
 * 
-* Method: registerListener(Listener listener) 
+* Method: registerListener(MessageListener listener)
 * 
 */ 
 @Test

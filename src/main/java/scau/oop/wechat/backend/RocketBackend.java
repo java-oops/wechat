@@ -1,25 +1,29 @@
 package scau.oop.wechat.backend;
 
 import com.rocketchat.common.data.model.ErrorObject;
-import com.rocketchat.core.callback.LoginListener;
-import com.rocketchat.core.callback.RoomListener;
-import com.rocketchat.core.model.RoomObject;
+import com.rocketchat.common.data.model.Room;
+import com.rocketchat.common.listener.ConnectListener;
+import com.rocketchat.common.listener.SubscribeListener;
+import com.rocketchat.core.RocketChatAPI;
+import com.rocketchat.core.callback.GetSubscriptionListener;
+import com.rocketchat.core.factory.ChatRoomFactory;
+import com.rocketchat.core.model.RocketChatMessage;
+import com.rocketchat.core.model.SubscriptionObject;
 import com.rocketchat.core.model.TokenObject;
-import com.rocketchat.livechat.callback.AuthListener;
-import com.rocketchat.livechat.model.GuestObject;
-import com.rocketchat.common.listener.*;
-import com.rocketchat.core.*;
 import com.sun.istack.internal.NotNull;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import scau.oop.wechat.backend.*;
-import scau.oop.wechat.backend.Listener;
+import scau.oop.wechat.backend.chatroom.Concat;
+import scau.oop.wechat.backend.chatroom.Group;
+import scau.oop.wechat.backend.chatroom.Person;
 import scau.oop.wechat.backend.msg.Message;
 import scau.oop.wechat.config.Config;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.error;
 
 /**
  * @author:czfshine
@@ -43,12 +47,16 @@ public class RocketBackend implements Backend {
 
     private boolean logged=false;
 
+    private Runnable loggincallback;
     private class LoginListener implements com.rocketchat.core.callback.LoginListener{
         @Override
         public void onLogin(TokenObject token, ErrorObject error) {
             if (error==null) {
                 logged=true;
                 logger.info("Logged in successfully, returned token "+ token.getAuthToken());
+                if(loggincallback!=null){
+                    loggincallback.run();
+                }
             }else{
                 logged=false;
                 logger.warn("Got error "+error.getMessage());
@@ -89,6 +97,11 @@ public class RocketBackend implements Backend {
         return logged;
     }
 
+    @Override
+    public boolean login(Runnable callback){
+        loggincallback=callback;
+        return login();
+    }
 
     @Override
     public boolean logout() {
@@ -100,25 +113,50 @@ public class RocketBackend implements Backend {
         return null;
     }
 
+    private Map<String,Concat> allconcat=new HashMap<>();
+    private Map<Concat,Room> concatRoomMap=new HashMap<>();
+    private class GetSubscriptionListenerImpl implements GetSubscriptionListener {
 
-    private class GetRoomListenerImpl implements RoomListener.GetRoomListener {
+        private class TypeRoom extends Room{
 
+            public TypeRoom(JSONObject object) {
+                super(object);
+            }
+        }
         @Override
-        public void onGetRooms(List<RoomObject> rooms, ErrorObject errorObject) {
-            if (errorObject==null){
-                for (RoomObject room : rooms){
-                    System.out.println("Room name is "+room.getRoomName());
-                    System.out.println("Room id is "+room.getRoomId());
-                    System.out.println("Room topic is "+room.getTopic());
-                    System.out.println("Room type is "+ room.getRoomType());
+        public void onGetSubscriptions(List<SubscriptionObject> subscriptions, ErrorObject error) {
+            if (error==null){
+                ChatRoomFactory factory = client.getChatRoomFactory();
+                for (SubscriptionObject room : subscriptions){
+                    factory.addChatRoom(room);
+                    if(String.valueOf(room.getRoomType())=="ONE_TO_ONE"){
+                        Person person = new Person();
+                        person.setNickname(room.getRoomName());
+                        person.setUUID(room.getRoomId());
+                        allconcat.put(room.getRoomId(),person);
+                        concatRoomMap.put(person,room);
+                    }else{
+                        Group group=new Group();
+                        group.setGroupName(room.getRoomName());
+                        group.setUUID(room.getRoomId());
+                        allconcat.put(room.getRoomId(),group);
+                        concatRoomMap.put(group,room);
+                    }
 
                 }
             }else{
-                System.out.println("Got error "+errorObject.getMessage());
+                System.out.println("Got error "+error.getMessage());
             }
+            if(refreshcallback!=null)refreshcallback.run();
         }
     }
 
+    private Runnable refreshcallback;
+    public void Refresh(Runnable callback){
+        refreshcallback=callback;
+        //Refresh
+        client.getSubscriptions(new GetSubscriptionListenerImpl());
+    }
     @Override
     @NotNull
     public Concat[] getAllConcats() {
@@ -127,28 +165,66 @@ public class RocketBackend implements Backend {
             //todo
             return new Concat[0];//don't null
         }
-        client.getRooms(new GetRoomListenerImpl());
-        return new Concat[0];//don't null
+        //Refresh(null);
+        Concat[] res=new Concat[allconcat.size()];
+
+        return allconcat.values().toArray(res);//don't null
     }
 
     @Override
     public Message[] getRecentMessage() {
+        //todo
         return new Message[0];
     }
 
-    @Override
-    public void registerListener(Listener listener) {
 
+    private MessageListener messageListener;
+
+    private class SubscriptionListenerImpl implements com.rocketchat.core.callback.MessageListener.SubscriptionListener{
+
+        @Override
+        public void onMessage(String roomId, RocketChatMessage message) {
+            //todo
+            System.out.println(roomId+message.getMessage());
+            Message message1 = new Message(null,null,allconcat.getOrDefault(message.getRoomId(),null));
+            if(messageListener!=null){
+                messageListener.run(message1);
+            }
+
+        }
+    }
+    @Override
+    public void registerListener(MessageListener messageListener) {
+        //todo
+        this.messageListener=messageListener;
+        ChatRoomFactory factory = client.getChatRoomFactory();
+        ArrayList<RocketChatAPI.ChatRoom> chatRooms = factory.getChatRooms();
+        for (RocketChatAPI.ChatRoom room:chatRooms){
+            room.subscribeRoomMessageEvent(new SubscribeListener() {
+                @Override
+                public void onSubscribe(Boolean isSubscribed, String subId) {
+                    if (isSubscribed) {
+                        System.out.println("subscribed to room successfully");
+                    }
+                }
+            },new SubscriptionListenerImpl());
+        }
     }
 
     @Override
     public void sendMessage(Message message, Callback callback) {
-
+        //todo
     }
 
     @Override
     public void sendMessage(Message message) {
-
+        //todo
+        System.out.println("Send Message");
+        Concat toCconcat = message.getConcat();
+        ChatRoomFactory factory = client.getChatRoomFactory();
+        RocketChatAPI.ChatRoom chatRoomById = factory.getChatRooms().get(0);
+        System.out.println(chatRoomById.getRoomData().getRoomName());
+        chatRoomById.sendMessage(message.getContant());
     }
 
 

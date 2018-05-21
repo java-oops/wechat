@@ -4,6 +4,8 @@ import org.junit.Test;
 import org.junit.Before; 
 import org.junit.After;
 import scau.oop.wechat.backend.RocketBackend;
+import scau.oop.wechat.backend.chatroom.Concat;
+import scau.oop.wechat.backend.msg.Message;
 
 import java.io.IOException;
 
@@ -127,7 +129,7 @@ public void testGetRecentMessage() throws Exception {
 
 /** 
 * 
-* Method: registerListener(Listener listener) 
+* Method: registerListener(MessageListener listener)
 * 
 */ 
 @Test
@@ -157,8 +159,23 @@ public void testSendMessageMessage() throws Exception {
 
 public static void main(String[] args) throws IOException {
     RocketBackend rocketBackend=new RocketBackend();
-    rocketBackend.login();
-    rocketBackend.getAllConcats();
+    rocketBackend.login(()->{
+        rocketBackend.Refresh(()->{
+            System.out.println("test Send");
+            try{
+
+                Concat[] allConcats = rocketBackend.getAllConcats();
+                Message message = new Message(null, null, allConcats[0]);
+                message.setContant("2333");
+
+                rocketBackend.sendMessage(message);
+                rocketBackend.registerListener(null);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+    });
+
 }
 
 } 

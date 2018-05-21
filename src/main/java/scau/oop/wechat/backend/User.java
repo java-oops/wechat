@@ -5,6 +5,6 @@ package scau.oop.wechat.backend;
  * @date:2018/5/8 16:58
  */
 
-public abstract class User {
+public interface User {
 
 }

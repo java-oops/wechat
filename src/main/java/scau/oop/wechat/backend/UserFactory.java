@@ -1,6 +1,6 @@
 package scau.oop.wechat.backend;
 
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
+import scau.oop.wechat.backend.chatroom.Concat;
 import scau.oop.wechat.backend.msg.Message;
 
 import java.util.HashMap;
@@ -46,6 +46,11 @@ public class UserFactory {
         }
 
         @Override
+        public boolean login(Runnable callback) {
+            return false;
+        }
+
+        @Override
         public boolean logout() {
             return false;
         }
@@ -66,7 +71,7 @@ public class UserFactory {
         }
 
         @Override
-        public void registerListener(Listener listener) {
+        public void registerListener(MessageListener messageListener) {
 
         }
 

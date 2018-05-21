@@ -1,6 +1,7 @@
 package scau.oop.wechat.backend;
 
 import scau.oop.wechat.backend.chatroom.ChatRoom;
+import scau.oop.wechat.backend.chatroom.Concat;
 import scau.oop.wechat.backend.msg.Message;
 
 import java.util.Date;
@@ -19,6 +20,11 @@ public class SimpleBackend implements Backend {
         return true;
     }
 
+    @Override
+    public boolean login(Runnable callback) {
+        return false;
+    }
+
     public boolean logout() {
         //todo
         return true;
@@ -27,7 +33,7 @@ public class SimpleBackend implements Backend {
     /**
      * 虚拟用户
      */
-    public class SimpleUser extends User{
+    public class SimpleUser implements User{
 
     }
 
@@ -67,14 +73,14 @@ public class SimpleBackend implements Backend {
         return new Message[]{new SimpleMessage(new Date(),new SimpleUser(),new SimpleChatRoom())};
     }
 
-    private Listener listener;
+    private MessageListener messageListener;
 
     /**
      * 模拟收到消息，定时收到
-     * @param listener 待注册的监听器
+     * @param messageListener 待注册的监听器
      */
-    public void registerListener(Listener listener) {
-        this.listener=listener;
+    public void registerListener(MessageListener messageListener) {
+        this.messageListener = messageListener;
         startSendMessageBySelf();
     }
 
@@ -98,7 +104,7 @@ public class SimpleBackend implements Backend {
         @Override
         public void run() {
             while(true){
-                listener.run(createRandomMessage());
+                messageListener.run(createRandomMessage());
                 try {
                     sleep(TIME);
                 } catch (InterruptedException e) {
