@@ -20,3 +20,21 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+.idea/
+
+
+target/
+*.iml
+src/main/java/scau/oop/wechat/trying/
+src/main/java/scau/oop/wechat/trying/WechatService.java
+.project
+.settings/org.eclipse.m2e.core.prefs
+
+# My configurations
+.classpath
+.project
+1.png
+
+doc/
+src/main/resources/try_ui.fxml
+*.png

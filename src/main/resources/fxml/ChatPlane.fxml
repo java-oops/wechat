@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXRippler?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
+
+<StackPane prefHeight="621.0" prefWidth="991.0" style="-fx-padding:0;" stylesheets="@../css/chat.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:id="mainpane">
+    <children>
+
+        <HBox>
+            <children>
+                <AnchorPane prefHeight="621.0" prefWidth="251.0" style="-fx-background-color: #213f57;">
+                    <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0" style="-fx-background-color: #213f57;">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="101.0" text="Button">
+                            <graphic>
+                                <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                    <FontAwesomeIcon glyphName="USER" size="2.5em" styleClass="custom-jfx-list-view-icon" />
+                                </StackPane>
+                            </graphic>
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </VBox.margin>
+                        </Button>
+
+                         <Label styleClass="left-label">
+                             <graphic>
+                                 <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                     <FontAwesomeIcon glyphName="COMMENT" size="2.5em" styleClass="custom-jfx-list-view-icon" />
+                                 </StackPane>
+                             </graphic>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                         </Label>
+                         <Label styleClass="left-label">
+                             <graphic>
+                                 <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                     <FontAwesomeIcon glyphName="USER" size="2.5em" styleClass="custom-jfx-list-view-icon" />
+                                 </StackPane>
+                             </graphic>
+                         </Label>
+                         <Label styleClass="left-label">
+                             <graphic>
+                                 <StackPane styleClass="custom-jfx-list-view-icon-container">
+                                     <FontAwesomeIcon glyphName="FILE" size="2.5em" styleClass="custom-jfx-list-view-icon" />
+                                 </StackPane>
+                             </graphic>
+                         </Label>
+
+
+                     </children>
+
+                  </VBox>
+
+
+
+
+                    </children>
+                </AnchorPane>
+                <SplitPane dividerPositions="0.29797979797979796" prefHeight="-1" prefWidth="-1">
+                    <items>
+                        <JFXListView fx:id="list1" maxWidth="300.0" minWidth="100" prefWidth="200" styleClass="custom-jfx-list-view">
+                            <Label>Item 1</Label>
+                            <Label>Item 3</Label>
+                            <Label>Item 4</Label>
+                            <Label>Item 5</Label>
+                            <Label>Item 7</Label>
+                            <Label>Item 8</Label>
+                            <Label>Item 9</Label>
+                            <Label>Item 1</Label>
+                            <Label>Item 3</Label>
+                            <Label>Item 4</Label>
+                            <Label>Item 5</Label>
+                            <Label>Item 7</Label>
+                            <Label>Item 8</Label>
+                            <Label>Item 9</Label>
+                            <Label>Item 1</Label>
+                            <Label>Item 3</Label>
+                            <Label>Item 4</Label>
+                            <Label>Item 5</Label>
+                            <Label>Item 7</Label>
+                            <Label>Item 8</Label>
+                            <Label>Item 9</Label>
+                            <Label>Item 1</Label>
+                            <Label>Item 3</Label>
+                            <Label>Item 4</Label>
+                            <Label>Item 5</Label>
+                            <Label>Item 7</Label>
+                            <Label>Item 8</Label>
+                            <Label>Item 9</Label>
+                            <Label>Item 1</Label>
+                            <Label>Item 3</Label>
+                            <Label>Item 4</Label>
+                            <Label>Item 5</Label>
+                            <Label>Item 7</Label>
+                            <Label>Item 8</Label>
+                            <Label>Item 9</Label>
+                            <Label>Item 1</Label>
+                            <Label>Item 3</Label>
+                            <Label>Item 4</Label>
+                            <Label>Item 5</Label>
+                            <Label>Item 7</Label>
+                            <Label>Item 8</Label>
+                            <Label>Item 9</Label>
+                        </JFXListView>
+                        <SplitPane dividerPositions="0.6392294220665499" orientation="VERTICAL">
+                            <items>
+                                <WebView fx:id="webview" prefHeight="2000.0" prefWidth="2000.0" />
+                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                    <children>
+                                        <HBox prefHeight="27.0" spacing="20" style="-fx-padding: 0 0 0 50;">
+                                            <JFXRippler position="BACK" styleClass="icons-rippler">
+                                                <StackPane style="-fx-padding: 10;">
+                                                    <FontAwesomeIcon glyphName="STAR" size="18px" styleClass="icon" wrappingWidth="27.85714340209961" />
+                                                </StackPane>
+                                            </JFXRippler>
+                                        </HBox>
+                                        <JFXTextArea id="jfxTextArea" promptText="你想说什么?">
+                                            <padding>
+                                                <Insets bottom="10.0" />
+                                            </padding>
+                                        </JFXTextArea>
+                                        <AnchorPane>
+                                            <children>
+                                                <JFXButton fx:id="send" alignment="CENTER_RIGHT" buttonType="RAISED" prefHeight="40" prefWidth="100" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Send" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                                            </children>
+                                            <padding>
+                                                <Insets top="10.0" />
+                                            </padding>
+                                        </AnchorPane>
+                                    </children>
+                                </VBox>
+                            </items>
+                        </SplitPane>
+                    </items>
+                </SplitPane>
+            </children>
+        </HBox>
+    </children>
+</StackPane>
