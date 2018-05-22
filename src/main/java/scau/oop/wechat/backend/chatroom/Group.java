@@ -14,5 +14,6 @@ public class Group extends Concat {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+        this.setDisplayName(groupName);
     }
 }

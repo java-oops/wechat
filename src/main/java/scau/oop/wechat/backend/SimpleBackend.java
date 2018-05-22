@@ -36,6 +36,10 @@ public class SimpleBackend implements Backend {
      */
     public class SimpleUser implements User {
 
+        @Override
+        public String getUUID() {
+            return null;
+        }
     }
 
     public User getUserInfo() {

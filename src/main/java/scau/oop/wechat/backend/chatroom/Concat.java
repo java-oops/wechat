@@ -14,4 +14,13 @@ public abstract class Concat {
     public void setUUID(String UUID) {
         this.UUID = UUID;
     }
+    private String DisplayName;
+
+    public String getDisplayName() {
+        return DisplayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        DisplayName = displayName;
+    }
 }

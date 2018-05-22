@@ -36,3 +36,5 @@ src/main/java/scau/oop/wechat/trying/WechatService.java
 1.png
 
 doc/
+src/main/resources/try_ui.fxml
+*.png

@@ -24,5 +24,6 @@ public class Person extends Concat  implements User {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+        this.setDisplayName(nickname);
     }
 }

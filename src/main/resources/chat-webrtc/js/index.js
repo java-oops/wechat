@@ -15,6 +15,11 @@ function addMessage(user, text) {
         chatNewMessage = document.createTextNode(text);
 
     chatNewThread.appendChild(chatNewMessage);
+    if(user=="me"){
+        chatNewThread.setAttribute("class","me")
+    }else{
+        chatNewThread.setAttribute("class","you")
+    }
     chatThread.appendChild(chatNewThread);
     chatThread.scrollTop = chatThread.scrollHeight;
 }

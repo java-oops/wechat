@@ -11,14 +11,19 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import scau.oop.wechat.backend.BackendFactory;
+import scau.oop.wechat.backend.RocketBackend;
 import scau.oop.wechat.backend.chatroom.Concat;
+import scau.oop.wechat.backend.chatroom.ConcatUtils;
 import scau.oop.wechat.backend.chatroom.Group;
 import scau.oop.wechat.backend.chatroom.Person;
+import scau.oop.wechat.backend.msg.Message;
 
 import javax.annotation.PostConstruct;
 
@@ -32,18 +37,35 @@ public class ChatPlaneController {
     @FXML
     private JFXListView list1;
 
+    @FXML
+    private Button send;
+
+    private Concat curConcat;
+
+    private WebEngine webEngine ;
     @PostConstruct
     public void init() {
         thiss=this;
-        final WebEngine webEngine = webview.getEngine();
-
+        webEngine = webview.getEngine();
         webEngine.load(Main.class.getResource("/chat-webrtc/index.html").toExternalForm());
 
         list1.addEventFilter(MouseEvent.MOUSE_CLICKED,e->{
-            System.out.println(((Label)((JFXListCell)e.getTarget()).getItem()).getText());
-            webEngine.executeScript("addMessage(\"\",\"11\");");
+            String name = ((Label) ((JFXListCell) e.getTarget()).getItem()).getText();
+            RocketBackend rc=(RocketBackend) BackendFactory.getBackend(Main.ROCKETID);
+            Concat[] allConcats = rc.getAllConcats();
+            Concat concat = ConcatUtils.FindConcatByDisplayName(allConcats, name);
+            curConcat=concat;
         });
 
+        send.setOnAction(e->{
+            webEngine.executeScript("addMessage(\"me\",\""+curConcat.getDisplayName()+"\");");
+        });
+
+    }
+    private void placeMessage(Message message){
+        //todo
+        message.getTalker();
+        webEngine.executeScript("addMessage(\"me\",\"11\");");
     }
 
     private static ChatPlaneController thiss;

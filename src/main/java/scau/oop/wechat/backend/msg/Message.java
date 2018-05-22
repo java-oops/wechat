@@ -39,4 +39,12 @@ public class Message {
     public void setContant(String contant) {
         this.contant = contant;
     }
+
+    public User getTalker() {
+        return talker;
+    }
+
+    public void setTalker(User talker) {
+        this.talker = talker;
+    }
 }

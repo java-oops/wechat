@@ -46,7 +46,7 @@ public class RocketBackend implements Backend {
     private boolean logged=false;
     private Me me;
     private Runnable loggincallback;
-    private class LoginListener implements com.rocketchat.core.callback.LoginListener{
+    private class LoginListenerImpl implements com.rocketchat.core.callback.LoginListener{
         @Override
         public void onLogin(TokenObject token, ErrorObject error) {
             if (error==null) {
@@ -70,7 +70,7 @@ public class RocketBackend implements Backend {
             logger.info("Connected to server");
             //todo
             System.out.println("username size:{} pwd size{}"+username.length()+password.length());
-            client.login(username,password,new RocketBackend.LoginListener());
+            client.login(username,password,new LoginListenerImpl());
         }
 
 

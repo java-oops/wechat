@@ -128,14 +128,14 @@
                                                 </StackPane>
                                             </JFXRippler>
                                         </HBox>
-                                        <JFXTextArea id="jfxTextArea" promptText="What do you think of JFoenix?">
+                                        <JFXTextArea id="jfxTextArea" promptText="你想说什么?">
                                             <padding>
                                                 <Insets bottom="10.0" />
                                             </padding>
                                         </JFXTextArea>
                                         <AnchorPane>
                                             <children>
-                                                <JFXButton alignment="CENTER_RIGHT" buttonType="RAISED" prefHeight="40" prefWidth="100" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="COLORED" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                                                <JFXButton fx:id="send" alignment="CENTER_RIGHT" buttonType="RAISED" prefHeight="40" prefWidth="100" style="-fx-text-fill:WHITE;-fx-background-color:#5264AE;-fx-font-size:14px;" text="Send" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
                                             </children>
                                             <padding>
                                                 <Insets top="10.0" />

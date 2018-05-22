@@ -6,6 +6,5 @@ package scau.oop.wechat.backend.chatroom;
  */
 
 public interface User {
-
-
+     String getUUID();
 }

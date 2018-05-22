@@ -15,4 +15,9 @@ public class Me implements User {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    @Override
+    public String getUUID() {
+        return "me";
+    }
 }

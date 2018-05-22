@@ -51,7 +51,7 @@ public class Main extends Application {
 
 
     }
-    private final String ROCKETID="rockedid1";
+    public  static final String ROCKETID="rockedid1";
     private void initBackend(){
         BackendFactory.createBackend(ROCKETID,RocketBackend.class);
         RocketBackend rc=(RocketBackend) BackendFactory.getBackend(ROCKETID);
