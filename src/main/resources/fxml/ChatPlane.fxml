@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<StackPane prefHeight="621.0" prefWidth="991.0" style="-fx-padding:0;" stylesheets="@../css/chat.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane prefHeight="621.0" prefWidth="991.0" style="-fx-padding:0;" stylesheets="@../css/chat.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:id="mainpane">
     <children>
 
         <HBox>
