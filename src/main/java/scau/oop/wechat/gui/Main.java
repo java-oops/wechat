@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import scau.oop.wechat.backend.Backend;
 import scau.oop.wechat.backend.BackendFactory;
 import scau.oop.wechat.backend.RocketBackend;
+import scau.oop.wechat.backend.chatroom.Concat;
 
 /**
  * @author:czfshine
@@ -39,6 +40,15 @@ public class Main extends Application {
     }
 
     private void setAllInfo(){
+        System.out.println("start set info");
+        try{
+            RocketBackend rc=(RocketBackend) BackendFactory.getBackend(ROCKETID);
+            Concat[] allConcats = rc.getAllConcats();
+            ChatPlaneController.getThis().setAllConcat(allConcats);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
     }
     private final String ROCKETID="rockedid1";
@@ -64,9 +74,7 @@ public class Main extends Application {
         DefaultFlowContainer container = new DefaultFlowContainer();
         flowContext = new ViewFlowContext();
         flowContext.register("Stage", stage);
-
-        flow.createHandler(flowContext).start(container)
-
+        flow.createHandler(flowContext).start(container);
 
         JFXDecorator decorator = new JFXDecorator(stage, container.getView());
         decorator.setCustomMaximize(true);
