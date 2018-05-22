@@ -6,6 +6,7 @@ import scau.oop.wechat.backend.chatroom.User;
 import java.util.Date;
 
 /**
+ * 消息对象
  * @author:czfshine
  * @date:2018/3/12 14:47
  */

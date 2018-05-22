@@ -13,6 +13,42 @@ public class ChatRoom extends Concat {
         return persons;
     }
 
+    public void setPersons(Person[] persons) {
+        this.persons = persons;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public Message[] getMsgs() {
+        return msgs;
+    }
+
+    public void setMsgs(Message[] msgs) {
+        this.msgs = msgs;
+    }
+
     private Person[] persons; //成员列表
     private String name; 
     private String avatarPath; //头像图片路径

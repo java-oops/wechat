@@ -24,34 +24,49 @@ import java.util.Map;
 
 
 /**
+ * RocketChat 对应的后端
  * @author:czfshine
  * @date:2018/5/12 9:40
  */
 
 public class RocketBackend implements Backend {
 
-
+    //配置对象
     private static Config theConfig;
+
+    //日志器
     Logger logger = LoggerFactory.getLogger("RocketBackend");
+
     static {
         theConfig=Config.getConfig();
         theConfig.registerConfig("BackendUrl","http://123.207.235.153:3000");
     }
 
+
     RocketChatAPI client;
+    //默认地址
     private static String serverurl="http://123.207.235.153:3000";
+    //默认用户名
     private static String username=System.getenv("ROCKETCHATNAME");
+    //默认密码
     private static String password=System.getenv("ROCKETCHATPWD");
 
+    //是否已登录
     private boolean logged=false;
     private Me me;
+    //登陆后的回调函数
     private Runnable loggincallback;
+
+    /**
+     * 登录监听器
+     */
     private class LoginListenerImpl implements com.rocketchat.core.callback.LoginListener{
         @Override
         public void onLogin(TokenObject token, ErrorObject error) {
             if (error==null) {
                 logged=true;
                 logger.info("Logged in successfully, returned token "+ token.getAuthToken());
+                //表示自己
                 me = new Me();
                 me.setUsername(client.getMyUserName());
                 if(loggincallback!=null){
@@ -64,6 +79,9 @@ public class RocketBackend implements Backend {
         }
     }
 
+    /**
+     * 连接监听器
+     */
     private  class ConnectListenerImpl implements ConnectListener{
         @Override
         public void onConnect(String sessionID) {
@@ -116,6 +134,7 @@ public class RocketBackend implements Backend {
     private Map<String,Concat> allconcat=new HashMap<>();
     private Map<Concat,Room> concatRoomMap=new HashMap<>();
     private class GetSubscriptionListenerImpl implements GetSubscriptionListener {
+
 
         @Override
         public void onGetSubscriptions(List<SubscriptionObject> subscriptions, ErrorObject error) {

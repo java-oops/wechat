@@ -7,6 +7,8 @@ package scau.oop.wechat.backend.chatroom;
 
 public abstract class Concat {
     protected String UUID;
+    private String DisplayName;
+
     public String getUUID() {
         return UUID;
     }
@@ -14,7 +16,6 @@ public abstract class Concat {
     public void setUUID(String UUID) {
         this.UUID = UUID;
     }
-    private String DisplayName;
 
     public String getDisplayName() {
         return DisplayName;
