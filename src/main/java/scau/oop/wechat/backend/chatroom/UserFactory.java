@@ -43,13 +43,31 @@ public class UserFactory {
                 User user =createNewUser();
                 alluser.get(backend).put(uuid,user);
                 return user;
-
             }
         }else{
             alluser.put(backend,new HashMap<>());
             return getUser(backend,uuid);
         }
     }
+
+    /**
+     * 增加对应后端的用户对象
+     * @param backend 要获取的后端
+     * @param uuid 用户唯一标识符
+     * @return 获取到的对象
+     */
+    public static void addUser(Backend backend,String uuid,User user){
+        if(alluser.getOrDefault(backend,null)!=null){
+            if(alluser.get(backend).getOrDefault(uuid,null)!=null){
+                alluser.get(backend).put(uuid,user);
+                return ;
+            }
+        }else{
+            alluser.put(backend,new HashMap<>());
+            getUser(backend,uuid);
+        }
+    }
+
 
     private static DefaultBackend defaultBackend=new DefaultBackend();
 

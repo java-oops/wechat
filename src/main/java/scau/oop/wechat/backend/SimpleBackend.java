@@ -34,16 +34,17 @@ public class SimpleBackend implements Backend {
     /**
      * 虚拟用户
      */
-    public class SimpleUser implements User {
+    public class SimpleUser extends User {
 
-        @Override
-        public String getUUID() {
-            return null;
+        public SimpleUser(String uuid) {
+            super(uuid);
         }
+
+
     }
 
     public User getUserInfo() {
-        return new SimpleUser();
+        return new SimpleUser("");
     }
 
     /**
@@ -51,17 +52,20 @@ public class SimpleBackend implements Backend {
      */
     public class SimpleChatRoom extends ChatRoom{
 
+        public SimpleChatRoom(String uuid) {
+            super(uuid);
+        }
     }
     private ChatRoom[] allconcat;
     public Concat[] getAllConcats() {
 
         /*保留给其他方法调用*/
         ChatRoom[] res=new ChatRoom[5];
-        res[0]=new SimpleChatRoom();
-        res[1]=new SimpleChatRoom();
-        res[2]=new SimpleChatRoom();
-        res[3]=new SimpleChatRoom();
-        res[4]=new SimpleChatRoom();
+        res[0]=new SimpleChatRoom("");
+        res[1]=new SimpleChatRoom("");
+        res[2]=new SimpleChatRoom("");
+        res[3]=new SimpleChatRoom("");
+        res[4]=new SimpleChatRoom("");
         allconcat=res;
         return res;
     }
@@ -75,7 +79,7 @@ public class SimpleBackend implements Backend {
         }
     }
     public Message[] getRecentMessage() {
-        return new Message[]{new SimpleMessage(new Date(),new SimpleUser(),new SimpleChatRoom())};
+        return new Message[]{new SimpleMessage(new Date(),new SimpleUser(""),new SimpleChatRoom(""))};
     }
 
     private MessageListener messageListener;

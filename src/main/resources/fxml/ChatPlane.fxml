@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<StackPane prefHeight="621.0" prefWidth="991.0" style="-fx-padding:0;" stylesheets="@../css/chat.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:id="mainpane">
+<StackPane fx:id="mainpane" prefHeight="621.0" prefWidth="991.0" style="-fx-padding:0;" stylesheets="@../css/chat.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <children>
 
         <HBox>
@@ -116,7 +116,7 @@
                             <Label>Item 8</Label>
                             <Label>Item 9</Label>
                         </JFXListView>
-                        <SplitPane dividerPositions="0.6392294220665499" orientation="VERTICAL">
+                        <SplitPane dividerPositions="0.7544426494345718" orientation="VERTICAL">
                             <items>
                                 <WebView fx:id="webview" prefHeight="2000.0" prefWidth="2000.0" />
                                 <VBox prefHeight="200.0" prefWidth="100.0">
@@ -128,7 +128,7 @@
                                                 </StackPane>
                                             </JFXRippler>
                                         </HBox>
-                                        <JFXTextArea id="jfxTextArea" promptText="你想说什么?">
+                                        <JFXTextArea fx:id="jfxTextArea" onKeyPressed="#onKey" promptText="你想说什么?">
                                             <padding>
                                                 <Insets bottom="10.0" />
                                             </padding>

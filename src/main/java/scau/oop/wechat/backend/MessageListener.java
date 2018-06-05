@@ -7,6 +7,6 @@ import scau.oop.wechat.backend.msg.Message;
  * @date:2018/5/9 12:49
  */
 
-public abstract class MessageListener implements Runnable{
+public abstract class MessageListener {
     public abstract void run(Message msg);
 }

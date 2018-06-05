@@ -11,6 +11,7 @@ import com.rocketchat.core.model.RocketChatMessage;
 import com.rocketchat.core.model.SubscriptionObject;
 import com.rocketchat.core.model.TokenObject;
 import com.sun.istack.internal.NotNull;
+import javafx.application.Platform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import scau.oop.wechat.backend.chatroom.*;
@@ -36,20 +37,22 @@ public class RocketBackend implements Backend {
 
     //日志器
     Logger logger = LoggerFactory.getLogger("RocketBackend");
-
-    static {
-        theConfig=Config.getConfig();
-        theConfig.registerConfig("BackendUrl","http://123.207.235.153:3000");
-    }
-
-
-    RocketChatAPI client;
     //默认地址
     private static String serverurl="http://123.207.235.153:3000";
     //默认用户名
     private static String username=System.getenv("ROCKETCHATNAME");
     //默认密码
     private static String password=System.getenv("ROCKETCHATPWD");
+
+    static {
+        theConfig=Config.getConfig();
+        theConfig.registerConfig("BackendUrl",serverurl);
+        theConfig.registerConfig("BackendUername",username);
+    }
+
+
+    RocketChatAPI client;
+
 
     //是否已登录
     private boolean logged=false;
@@ -67,8 +70,9 @@ public class RocketBackend implements Backend {
                 logged=true;
                 logger.info("Logged in successfully, returned token "+ token.getAuthToken());
                 //表示自己
-                me = new Me();
+                me = new Me("me");
                 me.setUsername(client.getMyUserName());
+                UserFactory.addUser(RocketBackend.this,"me",me);
                 if(loggincallback!=null){
                     loggincallback.run();
                 }
@@ -126,6 +130,9 @@ public class RocketBackend implements Backend {
         return false;
     }
 
+    public ChatRoomFactory getChatRommFactory(){
+        return client.getChatRoomFactory();
+    }
     @Override
     public User getUserInfo() {
         return me;
@@ -143,13 +150,13 @@ public class RocketBackend implements Backend {
                 for (SubscriptionObject room : subscriptions){
                     factory.addChatRoom(room);
                     if(String.valueOf(room.getRoomType())=="ONE_TO_ONE"){
-                        Person person = new Person();
+                        Person person = new Person(room.getRoomId());
                         person.setNickname(room.getRoomName());
                         person.setUUID(room.getRoomId());
                         allconcat.put(room.getRoomId(),person);
                         concatRoomMap.put(person,room);
                     }else{
-                        Group group=new Group();
+                        Group group=new Group(room.getRoomId());
                         group.setGroupName(room.getRoomName());
                         group.setUUID(room.getRoomId());
                         allconcat.put(room.getRoomId(),group);
@@ -190,7 +197,12 @@ public class RocketBackend implements Backend {
         return new Message[0];
     }
 
-
+    public Message toMessage(RocketChatMessage msg){
+        Message message = new Message(msg.getMsgTimestamp(), new User(msg.getSender().getUserName()),
+                allconcat.getOrDefault(msg.getRoomId(), null));
+        message.setContant(msg.getMessage());
+        return message;
+    }
     private MessageListener messageListener;
 
     private class SubscriptionListenerImpl implements com.rocketchat.core.callback.MessageListener.SubscriptionListener{
@@ -199,9 +211,15 @@ public class RocketBackend implements Backend {
         public void onMessage(String roomId, RocketChatMessage message) {
             //todo
             System.out.println(roomId+message.getMessage());
-            Message message1 = new Message(null,null,allconcat.getOrDefault(message.getRoomId(),null));
             if(messageListener!=null){
-                messageListener.run(message1);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        messageListener.run(toMessage(message));
+                    }
+                });
+
+
             }
 
         }

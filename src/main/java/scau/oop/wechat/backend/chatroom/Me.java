@@ -5,8 +5,12 @@ package scau.oop.wechat.backend.chatroom;
  * @date:2018/5/21 21:10
  */
 
-public class Me implements User {
+public class Me extends User {
     private String username;
+
+    public Me(String uuid) {
+        super(uuid);
+    }
 
     public String getUsername() {
         return username;

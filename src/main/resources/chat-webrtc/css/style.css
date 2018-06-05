@@ -119,30 +119,17 @@ body {
   outline: none;
 }
 
-/* Small screens */
-@media all and (max-width: 767px) {
+
+
   .chat-thread {
-    width: 90%;
-    height: 100%;
+    width: 95%;
+    height: 500px;/*todo*/
   }
 
   .chat-window {
-    left: 5%;
-    width: 90%;
-  }
-}
-/* Medium and large screens */
-@media all and (min-width: 768px) {
-  .chat-thread {
-    width: 50%;
-    height: 700px;/*todo*/
+
   }
 
-  .chat-window {
-    left: 25%;
-    width: 50%;
-  }
-}
 @keyframes show-chat-even {
   0% {
     margin-left: -480px;

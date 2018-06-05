@@ -9,6 +9,10 @@ import java.util.Date;
  */
 
 public class ChatRoom extends Concat {
+    public ChatRoom(String uuid) {
+        super(uuid);
+    }
+
     public Person[] getPersons() {
         return persons;
     }

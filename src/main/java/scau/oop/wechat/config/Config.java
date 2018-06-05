@@ -21,7 +21,7 @@ public class Config {
         public abstract void SetValue(E value);
     }
 
-    private static class StringConfigItem extends ConfigItem<String>{
+    public static class StringConfigItem extends ConfigItem<String>{
 
         private String value;
 
@@ -69,6 +69,9 @@ public class Config {
 
     public void registerConfig(String name,Object defaultValue ){
         allConfig.put(name,ConfigItemFactory.makeItem(defaultValue));
+    }
+    public Object getConfigItem(String name){
+        return allConfig.getOrDefault(name,null);
     }
 
 }

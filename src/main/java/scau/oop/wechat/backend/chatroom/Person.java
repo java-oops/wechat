@@ -7,10 +7,14 @@ import java.util.Date;
  * @date:2018/3/12 14:53
  */
 
-public class Person extends Concat  implements User {
+public class Person extends Concat   {
     private String avatarPath;
     private String nickname;
     private Date time;
+
+    public Person(String uuid) {
+        super(uuid);
+    }
 
     public Person getPerson(String UUID){
         return null;//todo

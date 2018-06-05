@@ -8,6 +8,10 @@ package scau.oop.wechat.backend.chatroom;
 public class Group extends Concat {
     private String groupName;
 
+    public Group(String uuid) {
+        super(uuid);
+    }
+
     public String getGroupName() {
         return groupName;
     }

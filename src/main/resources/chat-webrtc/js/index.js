@@ -22,4 +22,27 @@ function addMessage(user, text) {
     }
     chatThread.appendChild(chatNewThread);
     chatThread.scrollTop = chatThread.scrollHeight;
+    chatThread.scrollIntoView();
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+}
+
+function cleanMessage() {
+
+    chatThread.innerHTML="";
+
+}
+
+function toBottom(){
+    chatThread.scrollTop = chatThread.scrollHeight;
+    chatThread.scrollIntoView();
+}
+
+window.onload=function (){
+
+    javaapp.init();
+
+}
+window.onresize=function () {
+    chatThread.scrollTop = chatThread.scrollHeight;
+    chatThread.scrollIntoView();
 }
