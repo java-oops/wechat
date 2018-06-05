@@ -124,7 +124,7 @@
                                         <HBox prefHeight="27.0" spacing="20" style="-fx-padding: 0 0 0 50;">
                                             <JFXRippler position="BACK" styleClass="icons-rippler">
                                                 <StackPane style="-fx-padding: 10;">
-                                                    <FontAwesomeIcon glyphName="STAR" size="18px" styleClass="icon" wrappingWidth="27.85714340209961" />
+                                                    <FontAwesomeIcon fx:id="imagesel" glyphName="IMAGE" size="18px" styleClass="icon" wrappingWidth="27.85714340209961" />
                                                 </StackPane>
                                             </JFXRippler>
                                         </HBox>

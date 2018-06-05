@@ -201,6 +201,7 @@ public class RocketBackend implements Backend {
         Message message = new Message(msg.getMsgTimestamp(), new User(msg.getSender().getUserName()),
                 allconcat.getOrDefault(msg.getRoomId(), null));
         message.setContant(msg.getMessage());
+        message.setSourObj(msg);
         return message;
     }
     private MessageListener messageListener;

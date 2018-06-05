@@ -15,4 +15,13 @@ public class ConcatUtils {
         }
         return null;
     }
+    public static Concat FindConcatByUUID(Concat[] concats,String name){
+        for(Concat concat:concats){
+            if(concat.getUUID().equals(name)){
+                return concat;
+            }
+        }
+        return null;
+    }
+
 }

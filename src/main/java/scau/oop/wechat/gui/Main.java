@@ -12,10 +12,8 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import scau.oop.wechat.backend.Backend;
 import scau.oop.wechat.backend.BackendFactory;
 import scau.oop.wechat.backend.RocketBackend;
 import scau.oop.wechat.backend.chatroom.Concat;
@@ -44,7 +42,7 @@ public class Main extends Application {
         try{
             RocketBackend rc=(RocketBackend) BackendFactory.getBackend(ROCKETID);
             Concat[] allConcats = rc.getAllConcats();
-            ChatPlaneController.getThis().setAllConcat(allConcats);
+            ChatPaneController.getThis().setAllConcat(allConcats);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -70,7 +68,7 @@ public class Main extends Application {
      */
     private void initStyle(Stage stage) throws FlowException {
         //Flow flow = new Flow(MainWindowController.class);
-        Flow flow =new Flow(ChatPlaneController.class);
+        Flow flow =new Flow(ChatPaneController.class);
         DefaultFlowContainer container = new DefaultFlowContainer();
         flowContext = new ViewFlowContext();
         flowContext.register("Stage", stage);

@@ -14,7 +14,7 @@ import java.util.Date;
 public class Message {
     private Date time;
     private User talker;
-
+    private Object sourObj;
     public Message(Date time, User talker, Concat chatRoom) {
         this.time = time;
         this.talker = talker;
@@ -47,5 +47,13 @@ public class Message {
 
     public void setTalker(User talker) {
         this.talker = talker;
+    }
+
+    public Object getSourObj() {
+        return sourObj;
+    }
+
+    public void setSourObj(Object sourObj) {
+        this.sourObj = sourObj;
     }
 }
